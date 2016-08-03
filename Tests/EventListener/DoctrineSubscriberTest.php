@@ -113,7 +113,7 @@ class DoctrineSubscriberTest extends AbstractSecurityTest
         $this->assertTrue($this->manager->isGranted('VIEW', $object, 'foo'));
         $this->assertTrue($this->manager->isGranted('EDIT', $object, 'bar'));
 
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\LifecycleEventArgs')
+        $args = $this->getMockBuilder(LifecycleEventArgs::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

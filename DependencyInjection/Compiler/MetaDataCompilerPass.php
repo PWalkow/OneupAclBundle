@@ -22,10 +22,10 @@ class MetaDataCompilerPass implements CompilerPassInterface
             $definition->addMethodCall('addDriver', array(new Reference($id)));
         }
 
-        if ($container->hasDefinition('security.acl.provider')) {
-            $definition = $container->getDefinition('security.acl.provider');
+        if ($container->hasDefinition('security.acl.dbal.provider')) {
+            $definition = $container->getDefinition('security.acl.dbal.provider');
             $definition->setClass(AclProvider::class);
-            var_dump('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ overriden $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$!');
+//            var_dump('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ overriden $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$!');
         }
     }
 }
