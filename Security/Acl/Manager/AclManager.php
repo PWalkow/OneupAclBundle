@@ -5,27 +5,31 @@ namespace Oneup\AclBundle\Security\Acl\Manager;
 use Symfony\Component\Security\Acl\Domain\AclCollectionCache;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 use Oneup\AclBundle\Security\Acl\Model\AbstractAclManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class AclManager extends AbstractAclManager
 {
     protected $cache;
     protected $provider;
-    protected $context;
+    protected $tokenStorage;
+    protected $authorizationChecker;
     protected $objectIdentityStrategy;
     protected $permissionStrategy;
 
     public function __construct(
         MutableAclProviderInterface $provider,
-        SecurityContextInterface $context,
+        TokenStorageInterface $tokenStorage,
+        AuthorizationCheckerInterface $authorizationChecker,
         ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
         AclCollectionCache $cache,
         $permissionStrategy
     ) {
         $this->provider = $provider;
-        $this->context = $context;
+        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
         $this->objectIdentityStrategy = $objectIdentityStrategy;
         $this->cache = $cache;
         $this->permissionStrategy = $permissionStrategy;
@@ -48,9 +52,14 @@ class AclManager extends AbstractAclManager
         return $this->provider;
     }
 
-    protected function getSecurityContext()
+    protected function getTokenStorage()
     {
-        return $this->context;
+        return $this->tokenStorage;
+    }
+
+    protected function getAuthorizationChecker()
+    {
+        return $this->authorizationChecker;
     }
 
     protected function getObjectIdentityStrategy()

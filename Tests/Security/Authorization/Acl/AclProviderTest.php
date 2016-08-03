@@ -2,6 +2,8 @@
 
 namespace Oneup\AclBundle\Tests\Security\Authorization\Acl;
 
+use Oneup\AclBundle\Security\Authorization\Acl\AclProvider;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\Role\Role;
@@ -14,6 +16,7 @@ use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
  *
  * @uses AbstractSecurityTest
  * @author Julien Deniau <julien.deniau@mapado.com>
+ * @covers AclProvider
  */
 class AclProviderTest extends AbstractSecurityTest
 {
@@ -27,7 +30,8 @@ class AclProviderTest extends AbstractSecurityTest
     public function testFindObjectIdentitiesForToken()
     {
         $aclProvider = $this->container->get('security.acl.provider');
-        $this->assertInstanceOf('Oneup\AclBundle\Security\Authorization\Acl\AclProvider', $aclProvider);
+        $this->assertInstanceOf(AclProvider::class, $aclProvider);
+        $this->assertInstanceOf(MutableAclProviderInterface::class, $aclProvider);
 
         // empty object identity
         $ret = $aclProvider->findObjectIdentitiesForUser(
@@ -70,6 +74,9 @@ class AclProviderTest extends AbstractSecurityTest
     public function testFindObjectIdentitiesForUser()
     {
         $aclProvider = $this->container->get('security.acl.provider');
+        $this->assertInstanceOf(AclProvider::class, $aclProvider);
+        $this->assertInstanceOf(MutableAclProviderInterface::class, $aclProvider);
+
         $userRole = new Role('ROLE_USER');
         $user = new User('usertest', 'pwd', array($userRole));
 

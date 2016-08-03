@@ -28,3 +28,7 @@ doctrine:
             default:
                 driver: pdo_sqlite
                 memory: true
+
+#services:
+#    security.acl.provider:
+#        class: Oneup\AclBundle\Security\Authorization\Acl\AclProvider

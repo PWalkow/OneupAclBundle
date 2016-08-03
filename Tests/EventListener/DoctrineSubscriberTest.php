@@ -2,6 +2,7 @@
 
 namespace Oneup\AclBundle\Tests\EventListener;
 
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
 use Oneup\AclBundle\Tests\Model\SomeObject;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
@@ -27,7 +28,7 @@ class DoctrineSubscriberTest extends AbstractSecurityTest
         $this->assertFalse($this->manager->isGranted('VIEW', $object));
         $this->assertFalse($this->manager->isGranted('EDIT', $object));
 
-        $args = $this->getMockBuilder('Doctrine\Common\Persistence\Event\LifecycleEventArgs')
+        $args = $this->getMockBuilder(LifecycleEventArgs::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

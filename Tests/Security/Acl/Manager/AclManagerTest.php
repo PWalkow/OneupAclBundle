@@ -2,13 +2,14 @@
 
 namespace Oneup\AclBundle\Tests\Security\Acl\Manager;
 
+use Oneup\AclBundle\Security\Acl\Model\AclManagerInterface;
 use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
 
 class AclManagerTest extends AbstractSecurityTest
 {
     public function testIfPreloadFailsGracefullyIfNothingToLoad()
     {
-        $ret = $this->manager->preload(array());
+        $ret = $this->manager->preload([]);
         $this->assertNull($ret);
     }
 
@@ -28,7 +29,7 @@ class AclManagerTest extends AbstractSecurityTest
         $this->assertFalse($this->manager->isGranted('EDIT', $this->object1));
 
         // set token to admin token and try again
-        $this->container->get('security.context')->setToken($adminToken);
+        $this->container->get('security.token_storage')->setToken($adminToken);
         $this->assertTrue($this->manager->isGranted('VIEW', $this->object1));
         $this->assertTrue($this->manager->isGranted('CREATE', $this->object1));
         $this->assertTrue($this->manager->isGranted('EDIT', $this->object1));
@@ -66,7 +67,7 @@ class AclManagerTest extends AbstractSecurityTest
 
     public function testIfAclManagerLoads()
     {
-        $this->assertInstanceOf('Oneup\AclBundle\Security\Acl\Model\AclManagerInterface', $this->manager);
+        $this->assertInstanceOf(AclManagerInterface::class, $this->manager);
     }
 
     public function testIfAclManagerPropagatesIsGrantedCalls()

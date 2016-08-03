@@ -11,13 +11,14 @@
     <services>
         <service id="oneup_acl.manager" class="%oneup_acl.manager.class%">
             <argument type="service" id="security.acl.provider" />
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
             <argument type="service" id="security.acl.collection_cache" />
             <argument>%oneup_acl.permission_strategy%</argument>
         </service>
 
-        <service id="security.acl.collection_cache" class="%security.acl.collection_cache.class%">
+        <service id="security.acl.collection_cache" class="Symfony\Component\Security\Acl\Domain\AclCollectionCache">
             <argument type="service" id="security.acl.provider" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
             <argument type="service" id="security.acl.security_identity_retrieval_strategy" />
